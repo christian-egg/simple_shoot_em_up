@@ -22,13 +22,12 @@ ticks_since_last_enemy = 0
 time_to_next_enemy = 1000
 main_clock = pygame.time.Clock()
 score = 0
-is_game_running = True
 
 class MainCharacter(pygame.sprite.Sprite):
     """
     Holds data for the player character of the game
     """
-
+    is_player_alive = True
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         # image
@@ -48,7 +47,8 @@ class MainCharacter(pygame.sprite.Sprite):
         self.totalLives -= 1
 
         if (self.totalLives <= 0):
-            is_game_running = False
+            MainCharacter.is_player_alive = False
+            
 
 class BadGuy(pygame.sprite.Sprite):
     """
@@ -86,7 +86,7 @@ class BadGuy(pygame.sprite.Sprite):
 
         # If they get below the bototm of the screen, despawn
         if self.rect.top > height:
-            self.remove(badSprites)
+            self.remove(bad_sprites)
 
         # Slow down BadGuy if their speed is too high
         if self.badSpeed[0] > 6:
@@ -104,21 +104,13 @@ main = MainCharacter()
 main_sprite = pygame.sprite.Group()
 main_sprite.add(main)
 
-badSprites = pygame.sprite.Group()
+bad_sprites = pygame.sprite.Group()
 
 clock = pygame.time.Clock()
 # The game loop
-while is_game_running:
+while 1:
     # tick rate is 60 fps
     clock.tick(60)
-    
-    ticks_since_last_enemy += main_clock.tick()
-    
-    if ticks_since_last_enemy >= time_to_next_enemy:
-        score += ticks_since_last_enemy
-        ticks_since_last_enemy = 0
-        badSprites.add(BadGuy())
-        time_to_next_enemy = max(time_to_next_enemy - 10, 100)
 
     bg_y_pos -= 5
     bg_2_y_pos -= 5
@@ -128,7 +120,31 @@ while is_game_running:
     if bg_2_y_pos < -1 * background.get_height():
         bg_2_y_pos = background.get_height()
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+
     key = pygame.key.get_pressed()
+
+    # Display score once game ends
+    if not MainCharacter.is_player_alive:
+        screen.blit(background, (0, bg_y_pos))
+        screen.blit(background, (0, bg_2_y_pos))
+
+        title_font = pygame.font.SysFont("Times New Roman", 50)
+        game_over_text_1 = title_font.render("GAME OVER", 1, (250, 250, 250))
+        screen.blit(game_over_text_1, (120, 100))
+        my_font = pygame.font.SysFont("Times New Roman", 25)
+        score_text = my_font.render("Your score was: " + str(score), 1, (250, 250, 250))
+        screen.blit(score_text, (150, 180))
+        exit_text = my_font.render("Press space to exit", 1, (250, 250, 250))
+        screen.blit(exit_text, (150, 220))
+        
+        if (key[pygame.K_SPACE]):
+            sys.exit()
+
+        pygame.display.flip()
+        continue
 
     # Speed up in direction of key press
     if (key[pygame.K_a]):
@@ -161,18 +177,23 @@ while is_game_running:
     if main.rect.top < 0 or main.rect.bottom > height:
         speed[1] = -speed[1] * 1.5
 
+    # Generate new enemies at an increasingly fast interval
+    ticks_since_last_enemy += main_clock.tick()
+    
+    if ticks_since_last_enemy >= time_to_next_enemy:
+        score += ticks_since_last_enemy
+        ticks_since_last_enemy = 0
+        bad_sprites.add(BadGuy())
+        time_to_next_enemy = max(time_to_next_enemy - 10, 100)
+
     # update positions of MainCharacter and BadGuy objects
     main.rect = main.rect.move(speed)
-    badSprites.update()
+    bad_sprites.update()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-
-    collisions = pygame.sprite.spritecollideany(main, badSprites)
+    collisions = pygame.sprite.spritecollideany(main, bad_sprites)
     if (collisions is not None):
         if (pygame.time.get_ticks() - main.lastHit > 1000):
-            main_sprite.update()
+            is_game_running = main_sprite.update()
 
 
     # Draw background
@@ -180,16 +201,14 @@ while is_game_running:
     screen.blit(background, (0, bg_2_y_pos))
     # Draw sprites
     main_sprite.draw(screen)
-    badSprites.draw(screen)
+    bad_sprites.draw(screen)
 
     # Write UI text for life count
-    myFont = pygame.font.SysFont("Times New Roman", 18)
-    numLivesDraw = myFont.render("Lives: " + str(main.totalLives), 1, (250, 250, 250))
-    scoreText = myFont.render("Score: " + str(score), 1, (250, 250, 250))
-    screen.blit(numLivesDraw, (30, 30))
-    screen.blit(scoreText, (100, 30))
+    my_font = pygame.font.SysFont("Times New Roman", 18)
+    num_lives_draw = my_font.render("Lives: " + str(main.totalLives), 1, (250, 250, 250))
+    score_text = my_font.render("Score: " + str(score), 1, (250, 250, 250))
+    screen.blit(num_lives_draw, (30, 30))
+    screen.blit(score_text, (100, 30))
 
     pygame.display.flip()
-
-# Display score after game loop ends
-screen.
+quit()
