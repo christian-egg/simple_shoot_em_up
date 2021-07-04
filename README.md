@@ -16,14 +16,14 @@ Additionally, you must install pip: https://pip.pypa.io/en/stable/installing/
 </p>
   
 # Running the program
-<p> Download the files in this repository and place all of them in their own directory. To run the program, simply navigate to the directory where the files from this repository are located, and use python to run <br>
-checklist.py like so (if you have python3, simply change python to python3):
+<p> Download the files in this repository and place all of them in their own directory. To run the program, simply navigate to the directory where the files from this repository are located, and use python to run game.py like so (if you have python3, simply change python to python3):
 
 `$ python game.py`
 </p>
 
 # How to Play
-<p> The game begins immediately upon starting the program (there is no menu). The objective of the game is to manuever your ship to dodge enemy UFOs for as long as possible. Your ship can take 5 hits before it is destroyed, causing a game over. The longer you survive, the higher your score will be. Your score and lives are displayed in the upper-left corner of the screen like so:
+<p> The game begins immediately upon starting the program (there is no menu). The objective of the game is to manuever your ship to dodge enemy UFOs for as long as possible. Your ship can take 5 hits before it is destroyed, causing a game over. The longer you survive, the higher your score will be. Your score and lives are displayed in the upper-left corner of the screen like so: <br>
+![An annotated screenshot of the game](https://user-images.githubusercontent.com/85647626/124369696-5eb0fe80-dc34-11eb-8993-ca0df02de968.png)
 
 
 <br> Enemies will spawn at increasingly short intervals and will move in straight patterns diagonally, left, right, or down. Enemies will only spawn from the top, left, and right walls, so use this to your advantage to survive for as long as possible!
