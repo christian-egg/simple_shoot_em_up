@@ -22,11 +22,11 @@ Additionally, you must install pip: https://pip.pypa.io/en/stable/installing/
 </p>
 
 # How to Play
-<p> The game begins immediately upon starting the program (there is no menu). The objective of the game is to manuever your ship to dodge enemy UFOs for as long as possible. Your ship can take 5 hits before it is destroyed, causing a game over. The longer you survive, the higher your score will be. Your score and lives are displayed in the upper-left corner of the screen like so: <br>
-![An annotated screenshot of the game](https://user-images.githubusercontent.com/85647626/124369696-5eb0fe80-dc34-11eb-8993-ca0df02de968.png)
+<p> The game begins immediately upon starting the program (there is no menu). The objective of the game is to manuever your ship to dodge enemy UFOs for as long as possible. Your ship can take 5 hits before it is destroyed, causing a game over. The longer you survive, the higher your score will be. Your score and lives are displayed in the upper-left corner of the screen like so: </p>
 
+![image](https://user-images.githubusercontent.com/85647626/124369791-5e653300-dc35-11eb-94ac-c81840ecf2cc.png)
 
-<br> Enemies will spawn at increasingly short intervals and will move in straight patterns diagonally, left, right, or down. Enemies will only spawn from the top, left, and right walls, so use this to your advantage to survive for as long as possible!
+<p> Enemies will spawn at increasingly short intervals and will move in straight patterns diagonally, left, right, or down. Enemies will only spawn from the top, left, and right walls, so use this to your advantage to survive for as long as possible!
 </p>
 
 
